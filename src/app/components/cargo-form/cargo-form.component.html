@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col-sm-4 offset-md-4">
+        <div class="card card-body">
+            <div class="form" (submit)="submitCargo()">
+                <div class="form-group">
+                    <input type="text" name="name" 
+                    class="form-control" placeholder="Cargo Name" autofocus [(ngModel)]="cargo.Nombre">
+
+                </div>
+                <div class="form-group">
+                    <input type="text" name="description" [(ngModel)]="cargo.Descripcion"
+                    class="form-control" placeholder="Cargo description" autofocus>
+
+                </div>
+                <div class="form-group">
+                    <input type="text" name="idCargo" [(ngModel)]="cargo.IdCargo"
+                    class="form-control" placeholder="Cargo Id" autofocus>
+
+                </div>
+                <button class="btn btn-primary btn-block">
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
