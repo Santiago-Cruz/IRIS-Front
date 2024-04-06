@@ -1,1 +1,48 @@
-<p>user-list works!</p>
+<div *ngFor="let user of user" class="card card-body mb-2">
+    <div class="row">
+        <div class="col-md-8">
+            <p>HOLA</p>
+            <ul>
+                <li>
+                    Tipo id: {{user.TipoId}}
+                </li>
+                <li>
+                    Identificacion: {{user.Id}}
+                </li>
+                <li>
+                    Nombre(s): {{user.Nombres}}
+                </li>
+                <li>
+                    Apellidos: {{user.Apellidos}}
+                </li>
+                <li>
+                    Fecha nacimiento: {{user.Nacimiento}}
+                </li>
+                <li>
+                    Edad: {{user.Edad}}
+                </li>
+                <li>
+                    Email: {{user.Email}}
+                </li>
+                <li>
+                    Numero celular: {{user.Celular}}
+                </li>
+                <li>
+                    Liquidaciones pagas: {{user.Estado}}
+                </li>
+                <li>
+                    Fecha inicio: {{user.createdAt}}
+                </li>
+                <button class="btn btn-danger" (click)="deleteUser(user._id)">
+                    Delete
+                </button>
+                <button class="btn btn-secondary" [routerLink]="['/user/edit', user._id]">
+                    Edit
+                </button>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-4">
+
+    </div>
+</div>

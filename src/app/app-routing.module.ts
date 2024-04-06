@@ -13,11 +13,11 @@ const routes: Routes = [
     component: UserListComponent
   },
   {
-    path: 'cargo/create',
+    path: 'user/create',
     component: CargoFormComponent
   },
   {
-    path: 'cargo/edit:id',
+    path: 'user/edit/:id',
     component: CargoFormComponent
   }
 ];

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/users.service';
+import { LocalStorageServiceService } from 'src/app/services/local-storage.service.service';
+import { User } from 'src/app/interfaces/user';
 
 @Component({
   selector: 'app-user-list',
@@ -7,15 +9,37 @@ import { UserService } from 'src/app/services/users.service';
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit{
-  constructor (private userService: UserService) {}
+  user: User[] = [];
+  localStorageUsers= []
+
+  constructor (
+    private userService: UserService,
+    private localStorageService: LocalStorageServiceService
+    ) {}
   ngOnInit(){
-    this.getCargos();
+    console.log(this.localStorageService.getAllData())
+    this.getUsers();
   }
 
-  getCargos(){
-    this.userService.getCargos().
+  getUsers(): void{
+    this.userService.getUsers().
     subscribe(
-      res => console.log(res)
+      (res: any) => {
+        console.log(res);
+        this.user= res.user;
+      }
     )
   }
+  deleteUser(id: string): void{
+    this.localStorageService.removeData(id);
+    this.userService.deleteUser(id)
+      .subscribe(
+        res => {
+          this.getUsers();
+        },
+        err => console.log(err)
+      )
+
+  }
+
 }

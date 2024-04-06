@@ -1,26 +1,56 @@
 <div class="row">
     <div class="col-sm-4 offset-md-4">
         <div class="card card-body">
-            <div class="form" (submit)="submitCargo()">
+            <form (submit)="edit ? updateCargo(): submitCargo()">
+                <p>{{edit}}</p>
+                <select name="TipoId" class="form-control" [(ngModel)]="user.TipoId">
+                    <option value="">Seleccione un tipo de identificación</option>
+                    <option value="Cedula Ciudadania">CC (Cedula de ciudadania)</option>
+                    <option value="Tarjeta Identidad">TI (Tarjeta de identidad )</option>
+                    <option value="Cedula Extranjeria">CE (Cedula de extranjeria)</option>
+                </select>
+                <p> </p>
                 <div class="form-group">
-                    <input type="text" name="name" 
-                    class="form-control" placeholder="Cargo Name" autofocus [(ngModel)]="cargo.Nombre">
+                    <input type="text" name="Id" [(ngModel)]="user.Id"
+                    class="form-control" placeholder="Numero identificacion" autofocus>
 
                 </div>
                 <div class="form-group">
-                    <input type="text" name="description" [(ngModel)]="cargo.Descripcion"
-                    class="form-control" placeholder="Cargo description" autofocus>
-
+                    <input type="text" name="Nombres" [(ngModel)]="user.Nombres"
+                    class="form-control" placeholder="Nombre(s)" autofocus>
                 </div>
                 <div class="form-group">
-                    <input type="text" name="idCargo" [(ngModel)]="cargo.IdCargo"
-                    class="form-control" placeholder="Cargo Id" autofocus>
+                    <input type="text" name="Apellidos" [(ngModel)]="user.Apellidos"
+                    class="form-control" placeholder="Apellidos" autofocus>
+                </div>
+                <div class="form-group">
+                    <p>Fecha nacimiento</p>
+                    <input type="date" name="Nacimiento" [(ngModel)]="user.Nacimiento"
+                    class="form-control" placeholder="Nacimiento" autofocus>
+                </div>
 
+                <div class="form-group">
+                    <input type="text" name="Edad" [(ngModel)]="user.Edad"
+                    class="form-control" placeholder="Edad" autofocus>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="Email" [(ngModel)]="user.Email"
+                    class="form-control" placeholder="Email" autofocus>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" name="Celular" [(ngModel)]="user.Celular"
+                    class="form-control" placeholder="Celular" autofocus>
+                </div>
+                <div class="form-group">
+                    <label class="mr-2">He liquidado administracion y parqueadero de este mes</label>
+                    <input type="checkbox" name="Estado" [(ngModel)]="user.Estado"
+                    class="form-control" placeholder="Estado" autofocus>
                 </div>
                 <button class="btn btn-primary btn-block">
                     Save
                 </button>
-            </div>
+            </form>
         </div>
     </div>
 </div>

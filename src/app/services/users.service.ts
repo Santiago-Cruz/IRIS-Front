@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+
 import { Observable } from 'rxjs';
 
-import { Cargo } from '../interfaces/user';
+import { User } from '../interfaces/user';
 
 @Injectable({
   providedIn: 'root'
@@ -14,19 +15,19 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  getCargos(): Observable<Cargo[]>{
-    return this.http.get<Cargo[]>(`${this.BASE_URL}/users`);
+  getUsers(): Observable<User[]>{
+    return this.http.get<User[]>(`${this.BASE_URL}/users`);
   }
-  getCargo(id: string): Observable<Cargo> {
-    return this.http.get<Cargo>(`${this.BASE_URL}users/cargo?IdCargo=${id}`);
+  getUser(id: string): Observable<User> {
+    return this.http.get<User>(`${this.BASE_URL}/users/cargo?Id=${id}`);
   }
-  creteCargo(cargo: Cargo): Observable<Cargo> {
-    return this.http.post<Cargo>(`${this.BASE_URL}users/create`, cargo);
+  createUser(user: User): Observable<User> {
+    return this.http.post<User>(`${this.BASE_URL}/users/create`, user);
   }
-  deleteCargo(id: string): Observable<Cargo> {
-    return this.http.delete<Cargo>(`${this.BASE_URL}users/delete?IdCargo=${id}`);
+  deleteUser(id: string): Observable<User> {
+    return this.http.delete<User>(`${this.BASE_URL}/users/delete?Id=${id}`);
   }
-  updateCargo(id: string, cargo: Cargo): Observable<Cargo> {
-  return this.http.put<Cargo>(`${this.BASE_URL}users/update?IdCargo${id}`, cargo);
+  updateUser(id: string, user: User): Observable<User> {
+  return this.http.put<User>(`${this.BASE_URL}/users/update?Id=${id}`, user);
   }
 }
