@@ -19,15 +19,15 @@ export class UserService {
     return this.http.get<User[]>(`${this.BASE_URL}/users`);
   }
   getUser(id: string): Observable<User> {
-    return this.http.get<User>(`${this.BASE_URL}/users/cargo?Id=${id}`);
+    return this.http.get<User>(`${this.BASE_URL}/users/cargo/${id}`);
   }
   createUser(user: User): Observable<User> {
     return this.http.post<User>(`${this.BASE_URL}/users/create`, user);
   }
   deleteUser(id: string): Observable<User> {
-    return this.http.delete<User>(`${this.BASE_URL}/users/delete?Id=${id}`);
+    return this.http.delete<User>(`${this.BASE_URL}/users/delete/${id}`);
   }
   updateUser(id: string, user: User): Observable<User> {
-  return this.http.put<User>(`${this.BASE_URL}/users/update?Id=${id}`, user);
+  return this.http.put<User>(`${this.BASE_URL}/users/update?id=${id}`, user);
   }
 }

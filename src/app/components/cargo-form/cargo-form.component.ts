@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from 'src/app/interfaces/user';
 import { UserService } from 'src/app/services/users.service';
 import { LocalStorageServiceService } from 'src/app/services/local-storage.service.service';
@@ -12,7 +12,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class CargoFormComponent implements OnInit{
 
 
-  user: User = {
+  usuario: User = {
     TipoId: '',
     Id: '',
     Nombres: '',
@@ -25,7 +25,10 @@ export class CargoFormComponent implements OnInit{
   };
 
   edit: boolean= false;
-  myId: string= "";
+
+  @ViewChild('emailInput') emailInput: any;
+
+  // COMPONENTE FORMULARIO PARA CREAR O EDITAR USUARIOS
 
   constructor (
     private userService: UserService,
@@ -35,23 +38,32 @@ export class CargoFormComponent implements OnInit{
   ) { }
 
   ngOnInit() {
+    // Se determina si se creará o editará un
+    // propietario, basandose en las rutas:
+    //  /user/edit/id   
+    //  o
+    //  /user/create
+
       const params= this.activatedRoute.snapshot.params;
       if (Object.keys(params).length!==0){
         this.userService.getUser(params['id'])
         .subscribe(
-          (res: User) => {
-            console.log((res));
-            this.user= res;
+          (res) => {
+            console.log(res);
+            this.usuario= res;
             this.edit= true;
           },
           err => console.log(err)
         )
       }
   }
-
   submitCargo(){
-    this.localStorageService.saveData(this.user.Id, this.user);
-    this.userService.createUser(this.user).
+    // Metodo submitCargo() crea un nuevo propietario
+    // accionado con el boton Save
+    // Tambien se almacena la informacion en LocalStorage
+
+    this.localStorageService.saveData(this.usuario.Id, this.usuario);
+    this.userService.createUser(this.usuario).
     subscribe( 
       res => {
         console.log(res);
@@ -61,10 +73,16 @@ export class CargoFormComponent implements OnInit{
   }
 
   updateCargo(){
-    delete this.user.createdAt;
-    this.localStorageService.removeData(this.user.Id);
-    this.updateLocalStorage(this.user.Id);
-    this.userService.updateUser(this.user.Id, this.user)
+    // Metodo updateCargo() actualiza un propietario
+    // segun su id
+    // Tambien se actualiza informacion en localStorage
+
+    delete this.usuario.createdAt;
+
+    this.localStorageService.removeData(this.usuario.Id);
+    this.updateLocalStorage(this.usuario.Id);
+
+    this.userService.updateUser(this.usuario.Id, this.usuario)
     .subscribe(
       res => {
         console.log(res);
@@ -75,17 +93,20 @@ export class CargoFormComponent implements OnInit{
   }
 
   updateLocalStorage(Id: string){
+    // Funcion encargada de actualizar en localStorage
+    // cuando se usa el boton Edit
+
     const NewUser = {
-      TipoId: this.user.TipoId,
-      Id: this.user.Id,
-      Nombres: this.user.Nombres,
-      Apellidos: this.user.Apellidos,
-      Nacimiento: this.user.Nacimiento,
-      Edad: this.user.Edad,
-      Email: this.user.Email,
-      Celular: this.user.Celular,
-      Estado: this.user.Estado,
+      TipoId: this.usuario.TipoId,
+      Id: this.usuario.Id,
+      Nombres: this.usuario.Nombres,
+      Apellidos: this.usuario.Apellidos,
+      Nacimiento: this.usuario.Nacimiento,
+      Edad: this.usuario.Edad,
+      Email: this.usuario.Email,
+      Celular: this.usuario.Celular,
+      Estado: this.usuario.Estado,
     }
-    this.localStorageService.saveData(this.user.Id, NewUser);
+    this.localStorageService.saveData(this.usuario.Id, NewUser);
   }
 }

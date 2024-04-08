@@ -1,7 +1,9 @@
 <div *ngFor="let user of user" class="card card-body mb-2">
     <div class="row">
         <div class="col-md-8">
-            <p>HOLA</p>
+            <div class="text-center">
+                <p class="text-info">Propietario: {{user.Nombres}} {{user.Apellidos}}</p>
+            </div>
             <ul>
                 <li>
                     Tipo id: {{user.TipoId}}
@@ -16,7 +18,7 @@
                     Apellidos: {{user.Apellidos}}
                 </li>
                 <li>
-                    Fecha nacimiento: {{user.Nacimiento}}
+                    Fecha nacimiento: {{ user.Nacimiento   }}
                 </li>
                 <li>
                     Edad: {{user.Edad}}
@@ -27,13 +29,17 @@
                 <li>
                     Numero celular: {{user.Celular}}
                 </li>
-                <li>
-                    Liquidaciones pagas: {{user.Estado}}
+                <li *ngIf="user.Estado" class="text-success"> 
+                    Pago de administracion y parqueadero al dia
+                </li>
+                <li *ngIf="!user.Estado" class="text-danger"> 
+                    Pago de administracion y parqueadero atrasado
                 </li>
                 <li>
                     Fecha inicio: {{user.createdAt}}
                 </li>
-                <button class="btn btn-danger" (click)="deleteUser(user._id)">
+                <hr>
+                <button class="btn btn-danger" (click)="user._id && deleteUser(user._id)">
                     Delete
                 </button>
                 <button class="btn btn-secondary" [routerLink]="['/user/edit', user._id]">

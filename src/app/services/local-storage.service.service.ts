@@ -3,9 +3,14 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
+
+//SERVICIO PARA LOCAL STORAGE
+
 export class LocalStorageServiceService {
 
   constructor() { }
+
+  //METODOS EN LOCAL STORAGE
 
   saveData(key: string, data: any): void {
     localStorage.setItem(key, JSON.stringify(data));

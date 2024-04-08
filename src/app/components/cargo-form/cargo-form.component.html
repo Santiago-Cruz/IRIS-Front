@@ -1,53 +1,116 @@
 <div class="row">
     <div class="col-sm-4 offset-md-4">
         <div class="card card-body">
-            <form (submit)="edit ? updateCargo(): submitCargo()">
-                <p>{{edit}}</p>
-                <select name="TipoId" class="form-control" [(ngModel)]="user.TipoId">
+            <form (submit)="edit ? updateCargo(): submitCargo()" #f="ngForm">
+                <div class="text-center" *ngIf="edit" >
+                    <p class="text-info">EDITAR PROPIETARIO</p>
+                </div>
+                <div class="text-center" *ngIf="!edit">
+                    <p class="text-info">CREAR NUEVO PROPIETARIO</p>
+                </div>
+                <select name="TipoId" class="form-control" [(ngModel)]="usuario.TipoId">
                     <option value="">Seleccione un tipo de identificación</option>
                     <option value="Cedula Ciudadania">CC (Cedula de ciudadania)</option>
                     <option value="Tarjeta Identidad">TI (Tarjeta de identidad )</option>
                     <option value="Cedula Extranjeria">CE (Cedula de extranjeria)</option>
                 </select>
                 <p> </p>
-                <div class="form-group">
-                    <input type="text" name="Id" [(ngModel)]="user.Id"
-                    class="form-control" placeholder="Numero identificacion" autofocus>
+                <div class="text-center" *ngIf="edit" >
+                    <p class="text-danger">No cambiar numero de id</p>
+                </div>
+                <div class="form-group text-danger">
+                    <input type="text" name="Id" [(ngModel)]="usuario.Id"
+                    class="form-control" placeholder="Numero identificacion" autofocus 
+                    #id="ngModel" required>
+                    <div *ngIf="id.invalid && (id.touched || id.dirty)">
+                        <div *ngIf="id.errors?.['required']" class="text-danger">
+                            *requerido
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group text-danger">
+                    <input matInput type="text" name="Nombres" [(ngModel)]="usuario.Nombres"
+                    class="form-control" placeholder="Nombre(s)" autofocus required
+                    #name="ngModel">
+                    <div *ngIf="name.invalid && (name.touched || name.dirty)">
+                        <div *ngIf="name.errors?.['required']">
+                            *requerido
+                        </div>
+                    </div>
+                </div>
 
+                <div class="form-group text-danger">
+                    <input type="text" name="Apellidos" [(ngModel)]="usuario.Apellidos"
+                    class="form-control" placeholder="Apellidos" autofocus required
+                    #apellidos="ngModel">
+                    <div *ngIf="apellidos.invalid && (apellidos.touched || apellidos.dirty)">
+                        <div *ngIf="apellidos.errors?.['required']">
+                            *requerido
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <input type="text" name="Nombres" [(ngModel)]="user.Nombres"
-                    class="form-control" placeholder="Nombre(s)" autofocus>
-                </div>
-                <div class="form-group">
-                    <input type="text" name="Apellidos" [(ngModel)]="user.Apellidos"
-                    class="form-control" placeholder="Apellidos" autofocus>
-                </div>
+
                 <div class="form-group">
                     <p>Fecha nacimiento</p>
-                    <input type="date" name="Nacimiento" [(ngModel)]="user.Nacimiento"
-                    class="form-control" placeholder="Nacimiento" autofocus>
+                    <input type="date" name="Nacimiento" [(ngModel)]="usuario.Nacimiento"
+                    class="form-control" placeholder="Nacimiento" autofocus required
+                    #nacimiento="ngModel">
+                    <div *ngIf="nacimiento.invalid && (nacimiento.touched || nacimiento.dirty)" class="text-danger">
+                        <div *ngIf="nacimiento.errors?.['required']">
+                            *requerido
+                        </div>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <input type="text" name="Edad" [(ngModel)]="user.Edad"
-                    class="form-control" placeholder="Edad" autofocus>
-                </div>
-                <div class="form-group">
-                    <input type="text" name="Email" [(ngModel)]="user.Email"
-                    class="form-control" placeholder="Email" autofocus>
+                <div class="form-group text-danger">
+                    <input type="text" name="Edad" [(ngModel)]="usuario.Edad"
+                    class="form-control" placeholder="Edad" autofocus required
+                    #edad="ngModel">
+                    <div *ngIf="edad.invalid && (edad.touched || edad.dirty)">
+                        <div *ngIf="edad.errors?.['required']">
+                            *requerido
+                        </div>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <input type="text" name="Celular" [(ngModel)]="user.Celular"
-                    class="form-control" placeholder="Celular" autofocus>
+                <div class="form-group text-danger">
+                    <input type="text" name="Email" [(ngModel)]="usuario.Email"
+                    class="form-control" placeholder="Email" autofocus 
+                    #email="ngModel" required
+                    pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+                    <div *ngIf="email.invalid && (email.touched || email.dirty)">
+                        <div *ngIf="email.errors?.['required']">
+                            *requerido
+                        </div>
+                        <div *ngIf="email.errors?.['pattern']">
+                            *Ingrese email valido
+                        </div>
+                    </div>
                 </div>
+
+                <div class="form-group text-danger">
+                    <input type="text" name="Celular" [(ngModel)]="usuario.Celular"
+                    class="form-control" placeholder="Celular" autofocus required minlength="10"
+                    #celular="ngModel">
+                    <div *ngIf="celular.invalid && (celular.touched || celular.dirty)">
+                        <div *ngIf="celular.errors?.['required']">
+                            *requerido
+                        </div>
+                        <div *ngIf="celular.errors?.['minlength']">
+                            *Ingrese un numero celular valido
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label class="mr-2">He liquidado administracion y parqueadero de este mes</label>
-                    <input type="checkbox" name="Estado" [(ngModel)]="user.Estado"
-                    class="form-control" placeholder="Estado" autofocus>
+                    <input type="checkbox" name="Estado" [(ngModel)]="usuario.Estado"
+                    class="form-control" placeholder="Estado" autofocus
+                    #estado="ngModel">
+
                 </div>
-                <button class="btn btn-primary btn-block">
+
+                <button type="submit" class="btn btn-primary btn-block" [disabled]="f.invalid">
                     Save
                 </button>
             </form>

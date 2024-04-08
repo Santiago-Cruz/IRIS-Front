@@ -8,20 +8,28 @@ import { User } from 'src/app/interfaces/user';
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.css']
 })
+
+// COMPONENTE LISTA DE PROPIETARIOS
+
 export class UserListComponent implements OnInit{
   user: User[] = [];
   localStorageUsers= []
+
+  
 
   constructor (
     private userService: UserService,
     private localStorageService: LocalStorageServiceService
     ) {}
   ngOnInit(){
-    console.log(this.localStorageService.getAllData())
+    
     this.getUsers();
   }
 
   getUsers(): void{
+    // METODO getUsers() retorna todos los propietarios
+    // de la base de datos
+
     this.userService.getUsers().
     subscribe(
       (res: any) => {
@@ -31,7 +39,12 @@ export class UserListComponent implements OnInit{
     )
   }
   deleteUser(id: string): void{
+    // MEtodo deleteUser() actua al presionar el 
+    // boton Delete, elimina un usuario de la base
+    // de datos usando su _id
+
     this.localStorageService.removeData(id);
+    
     this.userService.deleteUser(id)
       .subscribe(
         res => {
