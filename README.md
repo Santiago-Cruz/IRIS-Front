@@ -1,3 +1,19 @@
+## Installation
+
+Install this with npm
+```bash
+  cd IRIS-Front
+  npm install
+```
+
+## Deployment
+
+To deploy this project run
+
+```bash
+  ng serve --open
+```
+
 # Client
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.10.
